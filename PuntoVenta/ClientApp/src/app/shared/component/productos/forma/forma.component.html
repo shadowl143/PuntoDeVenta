@@ -1,0 +1,20 @@
+<mat-toolbar class="tituloModal">
+  <span class="fuente">Usuarios</span>
+  <span class="espacioModal"></span>
+  <button mat-icon-button matTooltip="Cerrar" mat-dialog-close>
+    <mat-icon class="fuente">clear</mat-icon>
+  </button>
+</mat-toolbar>
+<mat-dialog-content class="mat-typography">
+
+  <form [formGroup]="forma" id="formaPagina" (submit)="guardar()">
+
+  </form>
+
+
+</mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button class="btn btn-danger col-md-4" style="margin-right:1%;" (click)="cerrar()">Cerrar</button>
+    <button class="btn btn-success col-md-4" #formaPagina (click)="guardar()">Guardar</button>
+  </mat-dialog-actions>
+

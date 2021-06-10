@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
 import { Contexto } from '../../api/contexto';
 import { FormaProductoComponent } from './forma/forma.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-productos',
@@ -13,7 +14,7 @@ export class ProductosComponent implements OnInit {
   displayedColumns: string[] = ['nombre', 'departamento', 'precio', 'editar'];
   dataSource = new MatTableDataSource<Productos>([]);
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  constructor(private ctx: Contexto, private ventana: MatDialog) { }
+  constructor(private ctx: Contexto, private ventana: Router) { }
 
   ngOnInit() {
     this.tabla();
@@ -26,9 +27,10 @@ export class ProductosComponent implements OnInit {
       }
     });
   }
-  abrirVentana(row: Productos) {
-    const dato = row.id;
-    this.ventana.open(FormaProductoComponent, { data: dato });
+  abrirVentana(row: number) {
+    const dato = row;
+    console.log(dato)
+    this.ventana.navigate(['EditarProducto/' + dato]);
   }
 
   applyFilter(filterValue: string) {

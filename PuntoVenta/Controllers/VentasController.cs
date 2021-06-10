@@ -33,7 +33,7 @@ namespace PuntoVenta.Controllers
             RespuestaVm resultado;
             try
             {
-                var ventas = this.mapper.Map<ICollection<VentaVm>>(await this.ctx.Ventas.ToListAsync());
+                var ventas = this.mapper.Map<ICollection<VentaVm>>(await this.ctx.Ventas.Include(e=>e.Usuario).ToListAsync());
                 resultado = new RespuestaVm() { Estatus = true, Mensaje = "Lista de usuarios", T = ventas };
             }
             catch (Exception ex)
@@ -63,29 +63,28 @@ namespace PuntoVenta.Controllers
             return resultado;
         }
 
-        [HttpPost]
-        public RespuestaVm Guardar(VentaCompletaVm model)
+        [HttpPost,Route("GuardarVenta")]
+        public RespuestaVm Guardar(List<SubVenta> model)
         {
             RespuestaVm resultado;
             try
             {
                 decimal sumaTotal = 0.00M;
                 var totalProductos = 0;
-                sumaTotal = model.SubVentas.Sum(e => e.Importe);
-                totalProductos = model.SubVentas.Sum(e => e.Cantidad);
-
+                sumaTotal = model.Sum(e => e.Importe);
+                totalProductos = model.Sum(e => e.Cantidad);
                 Venta ingresarVenta = new Venta()
                 {
                     CantidadProductos = totalProductos,
                     ImporteTotal = sumaTotal,
                     Fecha = DateTime.Now,
-                    UsuarioId = model.VentaVm.UsuarioId
+                    UsuarioId =1
                 };
                 this.ctx.Ventas.Add(ingresarVenta);
                 this.ctx.SaveChanges();
-                var ultimoRegistro = this.ctx.Ventas.LastOrDefault();
+                var ultimoRegistro = this.ctx.Ventas.ToList().LastOrDefault();
 
-                foreach (var productos in model.SubVentas)
+                foreach (var productos in model)
                 {
                     var prd = new SubVenta()
                     {

@@ -1,47 +1,43 @@
-<table class="table">
-  <thead class="thead table-bordered">
-<td><h3 style="display: inline;">Productos</h3>
-</td>
-  </thead>
-  <tbody>
-      <div class="mat-elevation-z8" >
-        <div class="row">
-          <mat-form-field  appearance="outline" class="col-md-11">
-            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
-          </mat-form-field>
-          <span class="agregar" class="col-md-1"><a class="btn btn_link" (click)="abrirVentana(0)" style="display: inline;"><mat-icon>add</mat-icon></a></span>
-        </div>
-        <table mat-table [dataSource]="dataSource" class="table">
-
-          <!-- Position Column -->
-          <ng-container matColumnDef="nombre">
-            <th mat-header-cell *matHeaderCellDef>Nombre de producto</th>
-            <td mat-cell *matCellDef="let element "> {{element.descripcion}}</td>
-          </ng-container>
-
-          <!-- Name Column -->
-          <ng-container matColumnDef="departamento">
-            <th mat-header-cell *matHeaderCellDef>Departamento</th>
-            <td mat-cell *matCellDef="let element">{{element.departamentoDescripcion}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="precio">
-            <th mat-header-cell *matHeaderCellDef>Precio </th>
-            <td mat-cell *matCellDef="let element">{{element.precio}} </td>
-          </ng-container>
-          <ng-container matColumnDef="editar">
-            <th mat-header-cell *matHeaderCellDef>Editar </th>
-            <td mat-cell *matCellDef="let element"> <button mat-icon-button aria-label="Editar" (click)="abrirVentana(element.id)"> <mat-icon>edit</mat-icon>
-            </button> </td>
-          </ng-container>
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-
-        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-
-      </div>
-    </tbody>
-</table>
+<mat-toolbar class="tituloModal row">
+  <span class="fuente col-md-11">Listado de productos</span>
+  <span class="espacioModal"></span>
+</mat-toolbar>
 
 
+<div class="mat-elevation-z8" >
+  <div class="row">
+    <mat-form-field  appearance="outline" class="col-md-11">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
+    </mat-form-field>
+    <span class="agregar" class="col-md-1"><a class="btn btn_link" (click)="abrirVentana(0)" style="display: inline;"><mat-icon>add</mat-icon></a></span>
+  </div>
+  <table mat-table [dataSource]="dataSource" class="table">
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="nombre">
+      <th mat-header-cell *matHeaderCellDef>Nombre de producto</th>
+      <td mat-cell *matCellDef="let element "> {{element.descripcion}}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="departamento">
+      <th mat-header-cell *matHeaderCellDef>Departamento</th>
+      <td mat-cell *matCellDef="let element">{{element.departamentoDescripcion}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="precio">
+      <th mat-header-cell *matHeaderCellDef>Precio </th>
+      <td mat-cell *matCellDef="let element">{{element.precio}} </td>
+    </ng-container>
+    <ng-container matColumnDef="editar">
+      <th mat-header-cell *matHeaderCellDef>Editar </th>
+      <td mat-cell *matCellDef="let element"> <button mat-icon-button aria-label="Editar" (click)="abrirVentana(element.id)"> <mat-icon>edit</mat-icon>
+      </button> </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+</div>

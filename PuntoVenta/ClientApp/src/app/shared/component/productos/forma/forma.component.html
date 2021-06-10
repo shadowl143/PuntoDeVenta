@@ -1,20 +1,36 @@
-<mat-toolbar class="tituloModal">
-  <span class="fuente">Usuarios</span>
-  <span class="espacioModal"></span>
-  <button mat-icon-button matTooltip="Cerrar" mat-dialog-close>
-    <mat-icon class="fuente">clear</mat-icon>
-  </button>
-</mat-toolbar>
-<mat-dialog-content class="mat-typography">
+<div style="border:solid 1px; padding-bottom: 2%;">
+  <mat-toolbar class="tituloModal row">
+    <span class="fuente col-md-11">Productos</span>
+    <span class="espacioModal"></span>
+    <button mat-icon-button matTooltip="Cerrar" (click)="cerrar()">
+      <mat-icon class="fuente col-md-1">reply</mat-icon>
+    </button>
+  </mat-toolbar>
+  <div class="mat-typography" style="width: 50%; margin-left: 25%; margin-top: 5%;">
 
-  <form [formGroup]="forma" id="formaPagina" (submit)="guardar()">
+    <form [formGroup]="forma" id="formaProducto" (submit)="guardar()">
+      <div class="contenedor">
+        <mat-form-field appearance="outline">
+          <input matInput placeholder="Nombre producto" formControlName="descripcion">
+        </mat-form-field>
 
-  </form>
+        <mat-form-field appearance="outline">
+          <input matInput placeholder="Precio" formControlName="precio" type="number">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-select placeholder="Departamento"  [(value)]="forma.get('departamentoId').value" (selectionChange)="cambiarDepartamento($event.value)">
+            <mat-option  *ngFor="let item of departameto" [value]="item.id">{{item.descripcion}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </form>
 
+    <div align="end">
+      <button class="btn btn-danger col-md-4" style="margin-right:1%;" (click)="cerrar()">Cerrar</button>
+      <button class="btn btn-success col-md-4" #formaProducto (click)="guardar()">Guardar</button>
+    </div>
+  </div>
 
-</mat-dialog-content>
-  <mat-dialog-actions align="end">
-    <button class="btn btn-danger col-md-4" style="margin-right:1%;" (click)="cerrar()">Cerrar</button>
-    <button class="btn btn-success col-md-4" #formaPagina (click)="guardar()">Guardar</button>
-  </mat-dialog-actions>
+</div>
+
 

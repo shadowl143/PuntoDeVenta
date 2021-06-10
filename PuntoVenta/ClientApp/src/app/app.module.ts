@@ -45,6 +45,8 @@ import { ServicioAlerta } from './utilerias/alerta';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'Productos', component: ProductosComponent },
       { path: 'Ventas', component: VentasComponent },
+      { path: 'EditarProducto/:id', component: FormaProductoComponent },
+      { path: 'NuevaVenta', component: NuevaventaComponent },
     ]),
     BrowserAnimationsModule,
     MatDialogModule,

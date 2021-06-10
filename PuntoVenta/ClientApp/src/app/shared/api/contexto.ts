@@ -13,7 +13,7 @@ export class Contexto {
 
   constructor(cliente: HttpClient) {
     this.repoProductos = new RepositorioProductos(cliente);
-
+    this.repoVenta = new RepositorioVenta(cliente);
   }
 
   public productos(): RepositorioProductos {

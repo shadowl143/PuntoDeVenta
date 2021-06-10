@@ -19,7 +19,7 @@ namespace ContextDB.Mappers
 
             CreateMap<Productos, ProductosVm>()
                 .ForMember(e => e.DepartamentoDescripcion, mo => mo.MapFrom(m => m.Departamento.Descripcion));
-            CreateMap<DepartamentoVM, Departamento>();
+            CreateMap<ProductosVm, Productos>();
 
             CreateMap<Usuarios, UsuariosVm>()
                 .ForMember(e => e.TipoUsuarioDescripcion, mo => mo.MapFrom(m => m.TipoUsuario.Descripcion));
@@ -29,8 +29,8 @@ namespace ContextDB.Mappers
             CreateMap<SubVentasVm, SubVenta>();
 
             CreateMap<Venta, VentaVm>()
-                .ForMember(e => e.UsuarioDescripcion, mo => mo.MapFrom(m => m.Usuarios.NombreUsuario))
-                .ForMember(e => e.TipoUsuarioDescripcion, mo => mo.MapFrom(m => m.Usuarios.TipoUsuario.Descripcion));
+                .ForMember(e => e.UsuarioDescripcion, mo => mo.MapFrom(m => m.Usuario.NombreUsuario))
+                .ForMember(e => e.TipoUsuarioDescripcion, mo => mo.MapFrom(m => m.Usuario.TipoUsuario.Descripcion));
             CreateMap<VentaVm, Venta>();
 
         }

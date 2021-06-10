@@ -14,7 +14,7 @@ namespace ContextDB.Models
         public DateTime Fecha { get; set; }
         public int UsuarioId { get; set; }
 
-        public Usuarios Usuarios { get; set; }
+        public Usuarios Usuario { get; set; }
         public ICollection<SubVenta> subVentas { get; set; }
     }
 }

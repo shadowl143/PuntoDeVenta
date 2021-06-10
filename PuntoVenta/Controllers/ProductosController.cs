@@ -66,10 +66,19 @@ namespace PuntoVenta.Controllers
             RespuestaVm resultado;
             try
             {
-                Productos modelo = this.mapper.Map<Productos>(model);
-                this.ctx.Productos.Add(modelo);
-                await this.ctx.SaveChangesAsync();
-                resultado = new RespuestaVm() { Estatus = true, Mensaje = "Ok", T = modelo };
+                if ( !this.Existe(model))
+                {
+                    Productos modelo = this.mapper.Map<Productos>(model);
+                    modelo.Id = 0;
+                    this.ctx.Productos.Add(modelo);
+                    await this.ctx.SaveChangesAsync();
+                    resultado = new RespuestaVm() { Estatus = true, Mensaje = "Ok", T = modelo };
+                } else
+                {
+                    resultado = new RespuestaVm() { Estatus = true, Mensaje = "Existe", T = null };
+
+                }
+                
             }
             catch (Exception ex)
             {
@@ -98,6 +107,27 @@ namespace PuntoVenta.Controllers
             }
 
             return resultado;
+        }
+
+        [HttpGet, Route("departamentos")]
+        public async Task<RespuestaVm> ObtenerDepartamentos()
+        {
+
+            try
+            {
+                var departamentos = mapper.Map<ICollection<DepartamentoVM>>(await this.ctx.Departamentos.ToListAsync());
+                return new RespuestaVm() { Estatus = true, Mensaje = "Ok", T = departamentos };
+            }
+            catch (Exception ex)
+            {
+                return new RespuestaVm() { Estatus = false, Mensaje = ex.Message, T = null };
+                throw;
+            }
+        }
+
+        private bool Existe(ProductosVm productos)
+        {
+            return this.ctx.Productos.Where(e => e.Descripcion == productos.Descripcion).Any();
         }
 
     }

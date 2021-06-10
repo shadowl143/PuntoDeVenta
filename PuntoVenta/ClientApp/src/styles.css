@@ -17,3 +17,9 @@ code {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.tituloModal {
+  margin-left: 0% !important;
+  width: 100% !important;
+  background-color: #116feb !important;
+  color: white !important;
+}

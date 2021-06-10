@@ -1,1 +1,57 @@
-<p>nuevaventa works!</p>
+<mat-toolbar class="tituloModal row">
+  <span class="fuente col-md-11">Nueva venta</span>
+  <span class="espacioModal"></span>
+  <button mat-icon-button matTooltip="Cerrar" class="col-md-1">
+    <mat-icon class="fuente">clear</mat-icon>
+  </button>
+</mat-toolbar>
+<div class="contenedor row" style="border:solid 1px; width: 100%; margin-left: 0%; padding-bottom: 1%;">
+  <form [formGroup]="forma" id="formaProducto" (submit)="guardar()"  class="col-md-12 row">
+
+        <mat-form-field  appearance="outline" class="col-md-5">
+          <input matInput placeholder='Producto' [matAutocomplete]="auto2" [formControl]="productosfiltro"
+            formControlName="productoDescripcion">
+          <mat-icon matPrefix>search</mat-icon>
+          <mat-icon matSuffix (click)="limpiarFiltroProductos()" matTooltip="Limpiar">clear</mat-icon>
+          <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="productosSeleccionado($event.option.value)">
+            <mat-option *ngFor="let e of productosFiltrados | async" [value]="e">
+              <span> {{e.descripcion}}</span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="col-md-5">
+          <input matInput placeholder="Nombre producto" formControlName="cantidad" type="number">
+        </mat-form-field>
+        <button mat-icon-button (click)="agregarLista()" type="button"><mat-icon>add</mat-icon> Agregar a lista</button>
+  </form>
+
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <td>Producto</td>
+      <td>Cantidad</td>
+      <td>importe</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of listaVenta">
+      <td>{{item.productoDescripcion}}</td>
+      <td>{{item.cantidad}}</td>
+      <td>{{item.importe}}</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="2">Total</td>
+      <td colspan="1">${{totalVenta}}</td>
+    </tr>
+
+  </tfoot>
+
+</table>
+
+<div align="end" class="col-md-12" style="margin-top: 2%;">
+  <button class="btn btn-danger col-md-4" style="margin-right:1%;" (click)="cerrar()">Cerrar</button>
+  <button class="btn btn-success col-md-4" #formaProducto (click)="guardar()">Guardar</button>
+</div>

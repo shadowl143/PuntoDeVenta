@@ -1,5 +1,7 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatDialog, TransitionCheckState } from '@angular/material';
+import { Router } from '@angular/router';
 import { Contexto } from '../../api/contexto';
 import { Venta } from '../../models/venta';
 import { NuevaventaComponent } from '../nuevaventa/nuevaventa.component';
@@ -13,9 +15,10 @@ export class VentasComponent implements OnInit {
   displayedColumns: string[] = ['importe', 'productos', 'fecha', 'usuario' ];
   dataSource = new MatTableDataSource<Venta>([]);
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  constructor(private ctx: Contexto, private ventana: MatDialog) { }
+  constructor(private ctx: Contexto, private nav: Router) { }
 
   ngOnInit() {
+    this.tabla();
   }
 
   tabla() {
@@ -26,9 +29,10 @@ export class VentasComponent implements OnInit {
       }
     });
   }
-  abrirVentana(row: Venta) {
-    const dato = row.id;
-    this.ventana.open(NuevaventaComponent, { data: dato });
+
+
+  NuevaVenta() {
+    this.nav.navigate(['NuevaVenta']);
   }
 
   applyFilter(filterValue: string) {

@@ -44,15 +44,15 @@ namespace PuntoVenta.Controllers
             return resultado;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet,Route("ventaDetalle/{id}")]
         public async Task<RespuestaVm> ObtenerId(int id)
         {
             RespuestaVm resultado;
             try
             {
-                var Venta = this.mapper.Map<VentaVm>(await this.ctx.Ventas.Where(e => e.Id == id).FirstOrDefaultAsync());
-                var detalleVenta = this.mapper.Map<ICollection<SubVentasVm>>(await this.ctx.SubVentas.Where(e => e.VentaId == id).ToListAsync());
-                var enviarDetalleVenta = new VentaCompletaVm() { VentaVm = Venta, SubVentas = detalleVenta.ToList() };
+            var Venta = this.mapper.Map<VentaVm>(await this.ctx.Ventas.Where(e => e.Id == id).FirstOrDefaultAsync());
+                var detalleVenta = this.mapper.Map<ICollection<SubVentasVm>>(await this.ctx.SubVentas.Include(e=>e.Producto).Where(e => e.VentaId == id).ToListAsync());
+                var enviarDetalleVenta = new VentaCompletaVm() { Venta = Venta, SubVentas = detalleVenta.ToList() };
                 resultado = new RespuestaVm() { Estatus = true, Mensaje = "Lista de usuarios", T = enviarDetalleVenta };
             }
             catch (Exception ex)
@@ -64,7 +64,7 @@ namespace PuntoVenta.Controllers
         }
 
         [HttpPost,Route("GuardarVenta")]
-        public RespuestaVm Guardar(List<SubVenta> model)
+        public RespuestaVm Guardar(List<SubVentasVm> model)
         {
             RespuestaVm resultado;
             try
@@ -78,7 +78,7 @@ namespace PuntoVenta.Controllers
                     CantidadProductos = totalProductos,
                     ImporteTotal = sumaTotal,
                     Fecha = DateTime.Now,
-                    UsuarioId =1
+                    UsuarioId = model[0].UsuarioId
                 };
                 this.ctx.Ventas.Add(ingresarVenta);
                 this.ctx.SaveChanges();
@@ -96,7 +96,7 @@ namespace PuntoVenta.Controllers
                     this.ctx.SubVentas.Add(prd);
                     this.ctx.SaveChanges();
                 }
-                resultado = new RespuestaVm() { Estatus = false, Mensaje = "ok", T = ingresarVenta };
+                resultado = new RespuestaVm() { Estatus = true, Mensaje = "ok", T = null };
             }
             catch (Exception ex)
             {

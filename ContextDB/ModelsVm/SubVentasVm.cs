@@ -14,5 +14,6 @@ namespace ContextDB.ModelsVm
         public int Cantidad { get; set; }
         public decimal Importe { get; set; }
         public int VentaId { get; set; }
+        public int UsuarioId { get; set; }
     }
 }

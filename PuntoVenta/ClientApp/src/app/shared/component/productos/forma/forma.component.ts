@@ -1,3 +1,4 @@
+import { Usuarios } from './../../../models/usuario';
 import { Observable } from 'rxjs';
 import { Departamento } from './../../../models/departamento';
 import { Productos } from './../../../models/productos';
@@ -19,6 +20,7 @@ export class FormaProductoComponent implements OnInit {
   departameto: Departamento[];
   modelo: Productos;
   id = 0;
+  usuario: Usuarios;
   constructor(private formBuilder: FormBuilder, private ctx: Contexto, private alertas: ServicioAlerta, private router: ActivatedRoute,
     private nav: Router) {
     this.id = router.snapshot.params.id;
@@ -42,6 +44,11 @@ export class FormaProductoComponent implements OnInit {
       departamentoDescripcion: [''],
     });
     this.cargarDepartamentos();
+    this.usuario = JSON.parse(localStorage.getItem('usuario'));
+    if (this.usuario.tipoUsuarioId !== 2) {
+      this.nav.navigate(['/Productos']);
+      this.alertas.mostrarError('No tiene permisos para hacer movimientos en los productos');
+    }
   }
 
   cargarDepartamentos() {

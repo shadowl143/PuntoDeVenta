@@ -25,7 +25,8 @@ namespace ContextDB.Mappers
                 .ForMember(e => e.TipoUsuarioDescripcion, mo => mo.MapFrom(m => m.TipoUsuario.Descripcion));
             CreateMap<UsuariosVm, Usuarios>();
 
-            CreateMap<SubVenta, SubVentasVm>();
+            CreateMap<SubVenta, SubVentasVm>()
+                .ForMember(e=>e.ProductoDescripcion,mo=>mo.MapFrom(m=>m.Producto.Descripcion));
             CreateMap<SubVentasVm, SubVenta>();
 
             CreateMap<Venta, VentaVm>()

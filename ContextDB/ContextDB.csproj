@@ -208,6 +208,10 @@
     <Compile Include="Migrations\20210610035132_segunda migracion.designer.cs">
       <DependentUpon>20210610035132_segunda migracion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20210610053518_segund migracion.cs" />
+    <Compile Include="Migrations\20210610053518_segund migracion.designer.cs">
+      <DependentUpon>20210610053518_segund migracion.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\ContextoModelSnapshot.cs" />
     <Compile Include="ModelsVm\DepartamentoVM.cs" />
     <Compile Include="ModelsVm\ProductosVm.cs" />

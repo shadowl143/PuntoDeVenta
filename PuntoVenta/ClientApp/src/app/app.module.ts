@@ -20,6 +20,7 @@ import { MatAutocompleteModule, MatButtonModule, MatDialogModule, MatDividerModu
    MatToolbarModule, MatTooltipModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServicioAlerta } from './utilerias/alerta';
+import { VerventadetalleComponent } from './shared/component/verventadetalle/verventadetalle.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ServicioAlerta } from './utilerias/alerta';
     ProductosComponent,
     FormaProductoComponent,
     VentasComponent,
-    NuevaventaComponent
+    NuevaventaComponent,
+    VerventadetalleComponent
   ],
   entryComponents: [
     FormaProductoComponent,
@@ -47,6 +49,7 @@ import { ServicioAlerta } from './utilerias/alerta';
       { path: 'Ventas', component: VentasComponent },
       { path: 'EditarProducto/:id', component: FormaProductoComponent },
       { path: 'NuevaVenta', component: NuevaventaComponent },
+      { path: 'VentaDetalle/:id', component: VerventadetalleComponent },
     ]),
     BrowserAnimationsModule,
     MatDialogModule,

@@ -1,3 +1,4 @@
+import { Usuarios } from './../../models/usuario';
 import { VentaCompleta } from './../../models/venta-completa';
 import { Contexto } from './../../api/contexto';
 import { Productos } from './../../models/productos';
@@ -6,6 +7,8 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { Component, Inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { ServicioAlerta } from 'src/app/utilerias/alerta';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nuevaventa',
@@ -23,8 +26,8 @@ export class NuevaventaComponent implements OnInit {
   productosSinFiltrar: Productos[];
   productosfiltro = new FormControl();
   modeloVentaCompleta: VentaCompleta;
-
-  constructor(private formBuilder: FormBuilder, private ctx: Contexto) { }
+  usuario:Usuarios;
+  constructor(private formBuilder: FormBuilder, private ctx: Contexto, private alertas: ServicioAlerta,private nav: Router) { }
 
   ngOnInit() {
     this.forma = this.formBuilder.group({
@@ -46,17 +49,26 @@ export class NuevaventaComponent implements OnInit {
   }
 
   guardar() {
+    if(this.listaVenta.length > 0) {
+      this.ctx.venta().guadarVenta(this.listaVenta).toPromise().then( e => {
+        console.log(e)
+        if (e.estatus) {
+          this.alertas.mostrarExito('Se genero una venta');
+          this.nav.navigate(['/Ventas']);
+        }
+      }).catch(e => {
+        console.log(e);
+      })
+    } else {
+      this.alertas.mostrarAdvertencia('No se han agregado produtos a la lista');
+    }
 
-    console.log(this.listaVenta)
-    this.ctx.venta().guadarVenta(this.listaVenta).toPromise().then( e => {
-
-    }).catch(e=>{
-      console.log(e);
-    })
   }
   agregarLista() {
     if (this.forma.valid) {
+      this.usuario = JSON.parse(localStorage.getItem('usuario'));
       const modelo = this.forma.value as SubVentas;
+      modelo.usuarioId = this.usuario.id;
       const lista = this.listaVenta.find(e => e.productoDescripcion === modelo.productoDescripcion);
       if (lista === undefined) {
         modelo.importe = this.precioProducto * modelo.cantidad;

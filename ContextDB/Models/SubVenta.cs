@@ -15,5 +15,6 @@ namespace ContextDB.Models
         public int VentaId { get; set; }
 
         public Venta Venta { get; set; }
+        public Productos Producto { get; set; }
     }
 }

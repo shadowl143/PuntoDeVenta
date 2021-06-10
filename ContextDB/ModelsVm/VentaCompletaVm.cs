@@ -8,7 +8,7 @@ namespace ContextDB.ModelsVm
 {
     public class VentaCompletaVm
     {
-        public VentaVm VentaVm { get; set; }
+        public VentaVm Venta { get; set; }
         public List<SubVentasVm> SubVentas { get; set; }
     }
 }

@@ -5,4 +5,5 @@ export class SubVentas {
   cantidad: number;
   importe: number;
   ventaId: number;
+  usuarioId: number;
 }

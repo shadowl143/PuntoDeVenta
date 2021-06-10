@@ -12,7 +12,7 @@ import { NuevaventaComponent } from '../nuevaventa/nuevaventa.component';
   styleUrls: ['./ventas.component.css']
 })
 export class VentasComponent implements OnInit {
-  displayedColumns: string[] = ['importe', 'productos', 'fecha', 'usuario' ];
+  displayedColumns: string[] = ['importe', 'productos', 'fecha', 'usuario', 'ver' ];
   dataSource = new MatTableDataSource<Venta>([]);
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   constructor(private ctx: Contexto, private nav: Router) { }
@@ -39,5 +39,9 @@ export class VentasComponent implements OnInit {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource.filter = filterValue;
+  }
+
+  verDetalle(id: number) {
+    this.nav.navigate(['VentaDetalle/' + id]);
   }
 }

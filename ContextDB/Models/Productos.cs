@@ -14,5 +14,6 @@ namespace ContextDB.Models
         public int DepartamentoId { get; set; }
 
         public Departamento Departamento { get; set; }
+        public ICollection<SubVenta> MyProperty { get; set; }
     }
 }
